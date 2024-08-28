@@ -22,7 +22,7 @@ runs:
   using: composite
   steps:
     - name: "sql-proxy: start container"
-      run: ${{ github.action_path }}/scripts/proxy.sh ${{ inputs.port }} ${{ inputs.connection }}
+      run: ${{ github.action_path }}/scripts/proxy.sh ${{ inputs.connection }}
       shell: bash
 
     - name: "sql-proxy: wait for connection"
