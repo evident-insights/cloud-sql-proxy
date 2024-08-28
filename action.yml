@@ -10,10 +10,6 @@ inputs:
     description: Service Account JSON Key
     required: false
 
-  token:
-    description: Service Account OIDC Token
-    required: false
-
   connection:
     description: CloudSQL instance connection name, e.g. project:region:instance
     required: true
@@ -22,37 +18,13 @@ inputs:
     description: Listening port
     required: true
 
-  version:
-    description: CloudSQL Proxy Version
-    required: false
-    default: 2.11.3
-
-  sleep:
-    description: time between connection checks
-    required: false
-    default: 3
-
-  attempts:
-    description: number of total connection checks
-    required: false
-    default: 10
-
 runs:
   using: composite
   steps:
-    - name: "sql-proxy: create working directory"
-      run: mkdir /tmp/action-google-cloud-sql-proxy
-      shell: bash
-
-    - name: "sql-proxy: write key to file if provided"
-      if: ${{ inputs.key != '' }}
-      run: echo '${{ inputs.key }}' > /tmp/action-google-cloud-sql-proxy/key.json
-      shell: bash
-
     - name: "sql-proxy: start container"
-      run: ${{ github.action_path }}/scripts/proxy.sh ${{ inputs.version }} ${{ inputs.port }} ${{ inputs.connection }} ${{ inputs.token }}
+      run: ${{ github.action_path }}/scripts/proxy.sh ${{ inputs.port }} ${{ inputs.connection }}
       shell: bash
 
     - name: "sql-proxy: wait for connection"
-      run: ${{ github.action_path }}/scripts/wait.sh ${{ inputs.port }} ${{ inputs.sleep }} ${{ inputs.attempts }}
+      run: ${{ github.action_path }}/scripts/wait.sh ${{ inputs.port }} 3 10
       shell: bash

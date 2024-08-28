@@ -1,8 +1,0 @@
-version: 2.0
-
-id: action-google-cloud-sql-proxy
-
-about:
-  title: Google Cloud SQL Proxy
-  description: Run the Google Cloud SQL Proxy in a GitHub Action's context
-  repository: ahmadnassri/action-google-cloud-sql-proxy
